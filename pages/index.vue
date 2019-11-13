@@ -1,35 +1,28 @@
-<template>
-  <div class="container">
-    <div>
-      <logo />
-      <h1 class="title">
-        goldfish_app
-      </h1>
-      <h2 class="subtitle">
-        My groundbreaking Nuxt.js project
-      </h2>
-      <div class="links">
-        <a href="https://nuxtjs.org/" target="_blank" class="button--green">
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
-    </div>
-  </div>
+<template lang="pug">
+  .container
+    .user_select(v-if="SwitchUser===''")
+      UserSelect
+    .user_select(v-if="SwitchUser!==''")
+      Main
+      .user_reset
+        v-btn(@click="ResetUser()") User Reset
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
-
 export default {
   components: {
-    Logo
+    UserSelect: () => import('~/components/organisms/UserSelect.vue'),
+    Main: () => import('~/components/organisms/Main.vue')
+  },
+  computed: {
+    SwitchUser() {
+      return this.$store.state.goldfish.user
+    }
+  },
+  methods: {
+    ResetUser() {
+      this.$store.commit('goldfish/SetUser', '')
+    }
   }
 }
 </script>
@@ -43,26 +36,9 @@ export default {
   align-items: center;
   text-align: center;
 }
-
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
+.user_reset {
+  position: absolute;
+  top: 4px;
+  right: 8px;
 }
 </style>

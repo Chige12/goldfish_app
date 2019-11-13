@@ -8,16 +8,21 @@ module.exports = {
     parser: 'babel-eslint'
   },
   extends: [
-    '@nuxtjs',
-    'prettier',
-    'prettier/vue',
-    'plugin:prettier/recommended',
-    'plugin:nuxt/recommended'
+    'eslint:recommended',
+    // https://github.com/vuejs/eslint-plugin-vue#priority-a-essential-error-prevention
+    // より厳しいルールにするには`plugin:vue/strongly-recommended` もしくは `plugin:vue/recommended` に切り替えることを検討してください。
+    'plugin:vue/recommended',
+    'plugin:prettier/recommended'
   ],
+  // *.vue ファイルを lint にかけるために必要
   plugins: [
-    'prettier'
+    'vue'
   ],
-  // add your custom rules here
+  // ここにカスタムルールを追加します。
   rules: {
+    'semi': [2, 'never'],
+    'no-console': 'off',
+    'vue/max-attributes-per-line': 'off',
+    'prettier/prettier': ['error', { 'semi': false }]
   }
 }

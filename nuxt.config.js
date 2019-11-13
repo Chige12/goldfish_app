@@ -19,22 +19,33 @@ export default {
   /*
    ** Customize the progress-bar color
    */
-  loading: { color: '#fff' },
+  loading: {
+    color: 'blue',
+    height: '5px'
+  },
   /*
    ** Global CSS
    */
-  css: [],
+  css: ['@/assets/styles/ress.css'],
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: [
+    { src: '~/plugins/vuetify', ssr: false },
+    { src: '~plugins/persistedstate.js', ssr: false }
+  ],
   /*
    ** Nuxt.js dev-modules
    */
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
-    '@nuxtjs/eslint-module'
+    '@nuxtjs/eslint-module',
+    '@nuxtjs/vuetify'
   ],
+  vuetify: {
+    customVariables: ['~/assets/styles/variables.scss'],
+    defaultAssets: { icons: 'mdiSvg' }
+  },
   /*
    ** Nuxt.js modules
    */
@@ -46,6 +57,19 @@ export default {
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) {}
+    extend(config, ctx) {
+      // Run ESLint on save
+      if (ctx.isDev && ctx.isClient) {
+        config.module.rules.push({
+          enforce: "pre",
+          test: /\.(js|vue)$/,
+          loader: "eslint-loader",
+          exclude: /(node_modules)/,
+          options : {
+            fix : true
+          }
+        })
+      }
+    }
   }
 }

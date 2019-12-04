@@ -26,13 +26,13 @@ export default {
   /*
    ** Global CSS
    */
-  css: ['@/assets/styles/ress.css'],
+  css: ['@/assets/styles/ress.css', 'video.js/dist/video-js.css'],
   /*
    ** Plugins to load before mounting the App
    */
   plugins: [
     { src: '~/plugins/vuetify', ssr: false },
-    { src: '~plugins/persistedstate.js', ssr: false }
+    { src: '~/plugins/persistedstate.js', ssr: false },
   ],
   /*
    ** Nuxt.js dev-modules
@@ -49,7 +49,9 @@ export default {
   /*
    ** Nuxt.js modules
    */
-  modules: [],
+  modules: [
+    '@nuxtjs/dotenv',
+  ],
   /*
    ** Build configuration
    */
@@ -61,12 +63,12 @@ export default {
       // Run ESLint on save
       if (ctx.isDev && ctx.isClient) {
         config.module.rules.push({
-          enforce: "pre",
+          enforce: 'pre',
           test: /\.(js|vue)$/,
-          loader: "eslint-loader",
+          loader: 'eslint-loader',
           exclude: /(node_modules)/,
-          options : {
-            fix : true
+          options: {
+            fix: true
           }
         })
       }

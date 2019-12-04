@@ -1,8 +1,15 @@
 <template lang="pug">
   .control_panel
+    ScreenShot
 </template>
 <script>
-export default {}
+import ScreenShot from '~/components/atoms/ScreenShot.vue'
+
+export default {
+  components: {
+    ScreenShot
+  }
+}
 </script>
 <style lang="scss" scoped>
 @import '~assets/styles/variables.scss';

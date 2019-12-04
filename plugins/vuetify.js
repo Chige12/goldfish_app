@@ -1,3 +1,4 @@
+import '@fortawesome/fontawesome-free/css/all.css' // Ensure you are using css-loader
 import Vue from 'vue'
 import Vuetify from 'vuetify/lib'
 import colors from 'vuetify/lib/util/colors'
@@ -5,6 +6,11 @@ import colors from 'vuetify/lib/util/colors'
 Vue.use(Vuetify)
 
 export default new Vuetify({
+  customVariables: ['~/assets/variables.scss'],
+  defaultAssets: { icons: 'mdiSvg' },
+  icons: {
+    iconfont: 'fa'
+  },
   theme: {
     themes: {
       light: {

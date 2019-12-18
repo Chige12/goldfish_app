@@ -2,8 +2,26 @@
   .goldfish_list
     v-app
       MembersOnly
-        HeaderMenu(:title="'金魚リスト'")
-        .container
+          HeaderMenu(:title="'金魚リスト'")
+          .container
+            v-list-item(
+              v-for="fish in goldfishes"
+              :key="`goldfish_${fish.id}`"
+              @click="openEditor(fish.id)"
+              )
+              v-list-item-avatar
+                v-icon(
+                  class="grey lighten-3"
+                  color="#e45e8a"
+                ) fas fa-fish
+              v-list-item-content
+                v-list-item-title(v-text="fish.name")
+                v-list-item-subtitle(v-if="fish.day") {{fish.day}} ~
+              v-list-item-action
+                v-btn(icon)
+                  v-icon( small color="grey lighten-1") fas fa-edit
+          .goldfish_list--edit(v-if="edit")
+            h2 {{edit_fish.name}}
 
 </template>
 <script>
@@ -15,19 +33,66 @@ export default {
     MembersOnly,
     HeaderMenu
   },
+  transition: {
+    name: 'page',
+    mode: 'in-out'
+  },
   data() {
     return {
       goldfishes: [
-        { id: 0, name: '金ちゃん' },
-        { id: 1, name: '金ちゃん2' },
-        { id: 2, name: '金ちゃん3' }
-      ]
+        {
+          id: 0,
+          img: '',
+          name: '金ちゃん',
+          day: '2019/8/15',
+          memo: '夏休み、金魚すくいの屋台でとった'
+        },
+        { id: 1, img: '', name: '金ちゃん2', day: '', memo: '' },
+        { id: 2, img: '', name: '金ちゃん3', day: '', memo: '' }
+      ],
+      edit: false,
+      edit_fish: {
+        id: 0,
+        img: '',
+        name: '',
+        day: '',
+        memo: ''
+      }
     }
+  },
+  methods: {
+    openEditor(id) {
+      this.edit_fish = this.goldfishes[id]
+      this.edit = true
+    },
+    closeEditor() {
+      this.edit = false
+    },
+    addNewFish() {},
+    removeFish() {}
   }
 }
 </script>
 <style lang="scss" scoped>
 .goldfish_list {
   width: 100%;
+  &--edit {
+    width: 100%;
+  }
+}
+
+.page-enter {
+  transform: translateX(100%);
+}
+.page-enter-to {
+  transform: translateX(0);
+  transition: 0.3s $ease-out;
+}
+.page-leave {
+  transform: translateX(0);
+}
+.page-leave-to {
+  transform: translateX(100%);
+  transition: 0.3s $ease-out;
 }
 </style>

@@ -1,21 +1,21 @@
 <template lang="pug">
-.index
-  v-app
-    .container(v-if="user === null")
-      //- v-btn(nuxt to="/signup") サインイン
-      .loginbtn_wrapper
-        v-btn.loginbtn(class="btn btn-light btn-block" large dark color="#4285F4" tabindex="" @click="googleLogin")
-          v-icon(left color="#fff") fab fa-google
-          span Googleでログイン
-        v-btn.loginbtn(class="btn btn-light btn-block" large dark color="#24292E" tabindex="" @click="githubLogin")
-          v-icon(left color="#fff") fab fa-github
-          span Githubでログイン
-    .container(v-if="user")
-      MembersOnly
-        .user_select(v-if="SwitchUserType===''")
-          UserSelect
-        .user_select(v-if="SwitchUserType!==''")
-          Main
+  .index
+    v-app
+      .container(v-if="user === null")
+        //- v-btn(nuxt to="/signup") サインイン
+        .loginbtn_wrapper
+          v-btn.loginbtn(class="btn btn-light btn-block" large dark color="#4285F4" tabindex="" @click="googleLogin")
+            v-icon(left color="#fff") fab fa-google
+            span Googleでログイン
+          v-btn.loginbtn(class="btn btn-light btn-block" large dark color="#24292E" tabindex="" @click="githubLogin")
+            v-icon(left color="#fff") fab fa-github
+            span Githubでログイン
+      .container(v-if="user")
+        MembersOnly
+          .user_select(v-if="SwitchUserType===''")
+            UserSelect
+          .user_select(v-if="SwitchUserType!==''")
+            Main
 </template>
 
 <script>
@@ -25,6 +25,10 @@ export default {
     MembersOnly,
     UserSelect: () => import('~/components/organisms/UserSelect.vue'),
     Main: () => import('~/components/organisms/Main.vue')
+  },
+  transition: {
+    name: 'page',
+    mode: 'in-out'
   },
   computed: {
     SwitchUserType() {

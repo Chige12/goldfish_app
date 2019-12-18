@@ -1,13 +1,13 @@
 <template lang="pug">
   .user_select
     .user_select_container
-      .user_name {{user.name}} としてログイン中
+      .user_name {{user.displayName}} としてログイン中
       .user_select_button
-        v-btn( outlined x-large @click="SetUserImage('child')") 子供用UI
+        v-btn( outlined x-large @click="SetUserType('child')") 子供用UI
       .user_select_button
-        v-btn( outlined x-large @click="SetUserImage('parent')") 大人用UI
-    .sign_out
-      v-btn( outlined large @click="SignOut()") サインアウト
+        v-btn( outlined x-large @click="SetUserType('parent')") 大人用UI
+    .log_out
+      v-btn( outlined large @click="LogOut()") ログアウト
 </template>
 <script>
 export default {
@@ -17,11 +17,11 @@ export default {
     }
   },
   methods: {
-    SetUserImage(image) {
-      this.$store.commit('setUserImage', image)
+    SetUserType(type) {
+      this.$store.commit('setUserType', type)
     },
-    SignOut() {
-      this.$store.commit('signOutUser')
+    LogOut() {
+      this.$store.dispatch('logout')
     }
   }
 }
@@ -35,7 +35,7 @@ export default {
 .user_select_button {
   padding: 4px;
 }
-.sign_out {
+.log_out {
   margin-top: 24px;
 }
 </style>

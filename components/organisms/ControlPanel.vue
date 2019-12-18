@@ -1,13 +1,16 @@
 <template lang="pug">
   .control_panel
+    Buttons
     ScreenShot
 </template>
 <script>
 import ScreenShot from '~/components/atoms/ScreenShot.vue'
+import Buttons from '~/components/molecules/Buttons.vue'
 
 export default {
   components: {
-    ScreenShot
+    ScreenShot,
+    Buttons
   }
 }
 </script>

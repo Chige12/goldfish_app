@@ -33,6 +33,7 @@ export default {
   plugins: [
     { src: '~/plugins/vuetify', ssr: false },
     { src: '~/plugins/persistedstate.js', ssr: false },
+    { src: '~/plugins/firebase', ssr: false }
   ],
   /*
    ** Nuxt.js dev-modules
@@ -49,9 +50,7 @@ export default {
   /*
    ** Nuxt.js modules
    */
-  modules: [
-    '@nuxtjs/dotenv',
-  ],
+  modules: ['@nuxtjs/dotenv'],
   /*
    ** Build configuration
    */

@@ -1,0 +1,16 @@
+@mixin pageTransition($sec: 0.3s) {
+  .page-enter {
+    transform: translateX(100%);
+  }
+  .page-enter-to {
+    transform: translateX(0);
+    transition: $sec $ease-out;
+  }
+  .page-leave {
+    transform: translateX(0);
+  }
+  .page-leave-to {
+    transform: translateX(100%);
+    transition: $sec $ease-out;
+  }
+}

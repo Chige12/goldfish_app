@@ -50,7 +50,10 @@ export default {
   /*
    ** Nuxt.js modules
    */
-  modules: ['@nuxtjs/dotenv'],
+  modules: ['@nuxtjs/dotenv', '@nuxtjs/style-resources'],
+  styleResources: {
+    scss: ['~/assets/styles/variables.scss', '~/assets/styles/mixins.scss']
+  },
   /*
    ** Build configuration
    */

@@ -49,6 +49,10 @@ export default {
       return this.$store.state.user
     }
   },
+  transition: {
+    name: 'page',
+    mode: 'in-out'
+  },
   async mounted() {
     console.log('mounted')
     this.load()
@@ -90,6 +94,8 @@ export default {
 </script>
 <style lang="scss" scoped>
 .comments {
+  z-index: 1;
   width: 100%;
 }
+@include pageTransition;
 </style>

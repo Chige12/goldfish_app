@@ -57,6 +57,7 @@ export default {
 
 <style lang="scss" scoped>
 .index {
+  z-index: 0;
   width: 100%;
 }
 .container {

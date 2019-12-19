@@ -25,6 +25,10 @@ export default {
   data: () => ({
     user_type: ['未設定', '子供', '親']
   }),
+  transition: {
+    name: 'page',
+    mode: 'in-out'
+  },
   computed: {
     SwitchUserType: {
       get() {
@@ -63,6 +67,8 @@ export default {
 </script>
 <style lang="scss" scoped>
 .edit {
+  z-index: 1;
   width: 100%;
 }
+@include pageTransition;
 </style>

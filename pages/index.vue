@@ -42,7 +42,7 @@ export default {
     }
   },
   async mounted() {
-    await this.$store.dispatch('INIT_USERS')
+    // await this.$store.dispatch('INIT_USERS')
   },
   methods: {
     googleLogin() {

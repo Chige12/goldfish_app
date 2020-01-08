@@ -1,6 +1,6 @@
 <template lang="pug">
   .live_stream
-    img(src="https://hogehoge/streaming.mjpeg").video(ref="video")
+    img(src="https://hogehoge/streaming.mjpeg" ref="video").video
     .take_picture(:class="{'take_picture--open':take_picture}")
       .take_picture_wrapper
         .canvas_wrapper

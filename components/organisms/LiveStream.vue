@@ -1,10 +1,18 @@
 <template lang="pug">
   .live_stream
-    video.video(ref="video")
-    .take_pinture(v-show="take_picture")
-      .canvas_wrapper
-        canvas.canvas(ref="canvas")
-      v-btn( depressed @click="PictureSave()") SAVE
+    img(src="https://hogehoge/streaming.mjpeg").video(ref="video")
+    .take_picture(:class="{'take_picture--open':take_picture}")
+      .take_picture_wrapper
+        .canvas_wrapper
+          canvas.canvas(ref="canvas")
+        .my-2
+          v-btn( large depressed @click="PictureSave()").save_btn
+            v-icon(left) fas fa-download
+            span SAVE
+        .my-2
+          v-btn( large depressed @click="ClosePicture()").save_btn
+            v-icon(left) fas fa-times
+            span CANCEL
 </template>
 
 <script>
@@ -40,13 +48,17 @@ export default {
     }
   },
   mounted() {
-    let video = this.$refs.video
-    let canvas = this.$refs.canvas
-    canvas.style.width = `${video.clientWidth}px`
-    canvas.style.height = `${video.clientHeight}px`
+    this.SizeSync()
   },
   methods: {
+    SizeSync() {
+      let video = this.$refs.video
+      let canvas = this.$refs.canvas
+      canvas.style.width = `${video.clientWidth}px`
+      canvas.style.height = `${video.clientHeight}px`
+    },
     PictureSave() {
+      this.SizeSync()
       let canvas = this.$refs.canvas
       this.take_picture = false
 
@@ -60,6 +72,9 @@ export default {
       link.href = canvas.toDataURL('image/png')
       link.download = 'test.png'
       link.click()
+    },
+    ClosePicture() {
+      this.take_picture = false
     }
   }
 }
@@ -73,8 +88,46 @@ export default {
   height: calc(100% - 160px);
   background: #333;
 }
+.video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.take_picture_wrapper {
+  transition: 0.5s $ease-out;
+  transform: translateY(30px);
+}
+
+.take_picture {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  width: 100%;
+  height: auto;
+  z-index: 200;
+  transition: 0.5s $ease-out;
+  background: rgba(#000, 0.8);
+  pointer-events: none;
+  &--open {
+    pointer-events: all;
+    opacity: 1;
+    .take_picture_wrapper {
+      transform: translateY(0);
+    }
+  }
+}
+
+.canvas_wrapper {
+  padding-top: 20px;
+}
+
 .video,
 .canvas {
-  background: #fff;
+  background: #666;
 }
 </style>

@@ -7,7 +7,7 @@
           v-list-item(
             v-for="fish in goldfishes"
             :key="`goldfish_${fish.id}`"
-            @click="openEditor(fish.id)"
+            @click="openInfo(fish.id)"
             )
             v-list-item-avatar
               v-icon(
@@ -18,10 +18,19 @@
               v-list-item-title(v-text="fish.name")
               v-list-item-subtitle(v-if="fish.day") {{fish.day}} ~
             v-list-item-action
-              v-btn(icon)
-                v-icon( small color="grey lighten-1") fas fa-edit
-        .goldfish_list--edit(v-if="edit")
-          h2 {{edit_fish.name}}
+              v-icon( small color="grey lighten-1") fas fa-info-circle
+          .plus_btn
+            v-btn(
+              dark
+              fab
+              top
+              right
+              color="#e45e8a"
+              @click="addNewFish()"
+            )
+              v-icon(small) fas fa-plus
+        .goldfish_list--info(v-if="info")
+          h2 {{info_fish.name}}
 
 </template>
 <script>
@@ -46,8 +55,8 @@ export default {
         { id: 1, img: '', name: '金ちゃん2', day: '', memo: '' },
         { id: 2, img: '', name: '金ちゃん3', day: '', memo: '' }
       ],
-      edit: false,
-      edit_fish: {
+      info: false,
+      info_fish: {
         id: 0,
         img: '',
         name: '',
@@ -61,12 +70,12 @@ export default {
     mode: 'in-out'
   },
   methods: {
-    openEditor(id) {
-      this.edit_fish = this.goldfishes[id]
-      this.edit = true
+    openInfo(id) {
+      this.info_fish = this.goldfishes[id]
+      this.info = true
     },
-    closeEditor() {
-      this.edit = false
+    closeInfo() {
+      this.info = false
     },
     addNewFish() {},
     removeFish() {}
@@ -80,6 +89,11 @@ export default {
   &--edit {
     width: 100%;
   }
+}
+.plus_btn {
+  position: absolute;
+  bottom: 24px;
+  right: 22px;
 }
 @include pageTransition;
 </style>

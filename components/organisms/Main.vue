@@ -2,14 +2,17 @@
   .main_vue
     LiveStream
     ControlPanel
+    Buttons
 </template>
 <script>
 import LiveStream from '~/components/organisms/LiveStream.vue'
 import ControlPanel from '~/components/organisms/ControlPanel.vue'
+import Buttons from '~/components/molecules/Buttons.vue'
 export default {
   components: {
     LiveStream,
-    ControlPanel
+    ControlPanel,
+    Buttons
   }
 }
 </script>

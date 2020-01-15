@@ -28,27 +28,28 @@
                 v-list-item-title Name :
                 v-list-item-subtitle {{edit_fish.name}}
               v-list-item-action
-                v-btn(icon)
+                v-btn(icon @click="openEditDialog('Name',edit_fish.name)")
                   v-icon( small color="grey lighten-1") fas fa-pen
             v-list-item
               v-list-item-content
                 v-list-item-title Add Day :
                 v-list-item-subtitle {{edit_fish.day}} ~
               v-list-item-action
-                v-btn(icon)
+                v-btn(icon @click="openEditDialog('Add Day',edit_fish.day)")
                   v-icon( small color="grey lighten-1") fas fa-pen
             v-list-item(three-line)
               v-list-item-content
                 v-list-item-title Memo :
                 v-list-item-subtitle {{edit_fish.memo}}
               v-list-item-action
-                v-btn(icon)
+                v-btn(icon @click="openEditDialog('Memo',edit_fish.memo)")
                   v-icon( small color="grey lighten-1") fas fa-pen
+        GoldfishInfoEdit(:dialog="dialog",:editValue="edit_value" :editProperty="edit_property" @closeEditDialog="closeEditDialog")
         .add_goldfish_btn
           v-btn(fab dark color="#e45e8a" @click="addNewFish()")
             v-icon(dark) fas fa-plus
         .add_goldfish(v-if="addnew")
-          AddGoldfish
+          AddGoldfish(@closeNewFish="closeNewFish")
           v-btn(icon @click="closeNewFish()").close_add_fish
             v-icon( small color="grey lighten-1") fas fa-times
 
@@ -57,6 +58,7 @@
 import MembersOnly from '~/components/members-only.vue'
 import HeaderMenu from '~/components/molecules/HeaderMenu.vue'
 import GoldfishList from '~/components/organisms/GoldfishList.vue'
+import GoldfishInfoEdit from '~/components/atoms/GoldfishInfoEdit.vue'
 import AddGoldfish from '~/components/organisms/AddGoldfish.vue'
 
 export default {
@@ -64,10 +66,14 @@ export default {
     MembersOnly,
     HeaderMenu,
     GoldfishList,
-    AddGoldfish
+    AddGoldfish,
+    GoldfishInfoEdit
   },
   data() {
     return {
+      dialog: false,
+      edit_property: '',
+      edit_value: '',
       goldfishes: [
         {
           id: 0,
@@ -123,7 +129,15 @@ export default {
     closeNewFish() {
       this.addnew = false
     },
-    removeFish() {}
+    removeFish() {},
+    openEditDialog(property, value) {
+      this.edit_property = property
+      this.edit_value = value
+      this.dialog = true
+    },
+    closeEditDialog() {
+      this.dialog = false
+    }
   }
 }
 </script>

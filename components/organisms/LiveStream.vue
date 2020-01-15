@@ -1,36 +1,34 @@
 <template lang="pug">
   .live_stream
-    img(src="https://hogehoge/streaming.mjpeg" ref="video").video
+    img(:src="streamUrl" ref="video").video
     .take_picture(:class="{'take_picture--open':take_picture}")
       .take_picture_wrapper
         .canvas_wrapper
           canvas.canvas(ref="canvas")
-        .my-2
-          v-btn( large depressed @click="PictureSave()").save_btn
-            v-icon(left) fas fa-download
-            span SAVE
-        .my-2
-          v-btn( large depressed @click="ClosePicture()").save_btn
-            v-icon(left) fas fa-times
-            span CANCEL
+        .save_btn_wrapper
+          .my-2
+            v-btn( large depressed @click="ClosePicture()").save_btn
+              v-icon(left) fas fa-times
+              span CANCEL
+            v-btn( color="#e45e8a" dark large depressed @click="PictureSave()").save_btn
+              v-icon(left) fas fa-download
+              span SAVE
+            
 </template>
 
 <script>
 export default {
   data() {
     return {
-      take_picture: false,
-      videoOptions: {
-        source: {
-          type: 'application/x-mpegURL',
-          src: 'https://example.net/live/playlist.m3u8',
-          withCredentials: false
-        },
-        live: true
-      }
+      stream_path: 'streaming.mjpeg',
+      camera_path: 'camera.mjpeg',
+      take_picture: false
     }
   },
   computed: {
+    streamUrl() {
+      return `${process.env.SERVER_URL}/${this.stream_path}`
+    },
     screenshot() {
       return this.$store.state.screenshot
     }
@@ -45,6 +43,7 @@ export default {
       canvas
         .getContext('2d')
         .drawImage(video, 0, 0, canvas.width, canvas.height)
+      this.SizeSync()
     }
   },
   mounted() {
@@ -85,16 +84,19 @@ export default {
 
 .live_stream {
   width: 100%;
-  height: calc(100% - 160px);
+  height: calc(100% - 120px);
   background: #333;
 }
 .video {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
 .take_picture_wrapper {
+  width: 100%;
+  height: 100%;
   transition: 0.5s $ease-out;
   transform: translateY(30px);
 }
@@ -120,6 +122,17 @@ export default {
       transform: translateY(0);
     }
   }
+}
+
+.save_btn_wrapper {
+  position: absolute;
+  bottom: 4px;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+.save_btn {
+  margin: 4px;
 }
 
 .canvas_wrapper {

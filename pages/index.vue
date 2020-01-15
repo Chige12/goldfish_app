@@ -59,14 +59,17 @@ export default {
 .index {
   z-index: 0;
   width: 100%;
+  overflow: hidden;
 }
 .container {
+  padding: 0px;
   margin: 0 auto;
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
+  overflow: hidden;
 }
 .loginbtn {
   margin: 16px;

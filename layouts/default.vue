@@ -1,7 +1,7 @@
 <template lang="pug">
   div.layout
     firstLoading
-    nuxt
+    nuxt.nuxt
 </template>
 
 <script>
@@ -39,5 +39,15 @@ body {
 
 .layout {
   position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+.nuxt {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
 }
 </style>

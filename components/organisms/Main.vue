@@ -21,5 +21,6 @@ export default {
   width: 100%;
   height: 100vh;
   background: #fff;
+  overflow: hidden;
 }
 </style>

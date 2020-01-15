@@ -20,3 +20,12 @@ $ yarn generate
 ```
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+
+### about `.env`
+
+Sample:
+
+```
+FRONT_URL="http://localhost:3000"
+SERVER_URL="http://localhost:5000"
+```

@@ -29,7 +29,7 @@ export default {
   width: 100vw;
   height: 100vh;
   font-size: 40px;
-  background: #375;
+  background: $theme-pink;
   color: white;
   &.is-finish {
     transition: opacity 1s, z-index 0s 1.01s;

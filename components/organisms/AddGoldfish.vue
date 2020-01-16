@@ -46,8 +46,8 @@ export default {
       let coverX = this.$refs.click_cover.clientWidth
       let coverY = this.$refs.click_cover.clientHeight
       let coverRatio = (coverY * 100) / coverX
-      let raspcamX = 480
-      let raspcamY = 640
+      let raspcamX = 640
+      let raspcamY = 480
       let raspcamRatio = (raspcamY * 100) / raspcamX
 
       if (raspcamRatio <= coverRatio) {

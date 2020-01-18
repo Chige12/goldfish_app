@@ -116,12 +116,12 @@ export default {
     mode: 'in-out'
   },
   methods: {
-    openEditor(id) {
-      this.edit_fish = this.goldfishes[id]
-      this.edit = true
+    openInfo(id) {
+      this.info_fish = this.goldfishes[id]
+      this.info = true
     },
-    closeEditor() {
-      this.edit = false
+    closeInfo() {
+      this.info = false
     },
     addNewFish() {
       this.addnew = true

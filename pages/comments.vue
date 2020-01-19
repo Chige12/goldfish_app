@@ -23,7 +23,7 @@
                 small {{ post.date }}
               p {{ post.comment }}
         .alert
-          v-alert(type="error" v-model="alert" dense dismissible elevation="5") {{error}}
+          v-alert.v-alert(type="error" v-model="alert" dense dismissible elevation="5") {{error}}
 </template>
 
 <script>

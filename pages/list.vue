@@ -3,46 +3,46 @@
     v-app
       MembersOnly
         HeaderMenu(:title="'金魚リスト'")
-        GoldfishList(:goldfishes="goldfishes" @openEditor="openEditor")
-        .goldfish_list_edit(:class="{'goldfish_list_edit--open':edit}")
+        GoldfishList(:goldfishes="goldfishes" @openEditor="openInfo")
+        .goldfish_list_edit(:class="{'goldfish_list_edit--open':info}")
           .list_edit_wrapper
             .header_btns
-              v-btn( depressed @click="closeEditor()").close_btn
+              v-btn( depressed @click="closeInfo()").close_btn
                 v-icon(left) fas fa-times
                 span Close
-              v-btn( color="#e45e8a" dark depressed @click="closeEditor()").close_btn
+              v-btn( color="#e45e8a" dark depressed @click="closeInfo()").close_btn
                 v-icon(left dark) fas fa-save
                 span Save
             v-list-item
               v-avatar
                 v-icon(
                   class="grey lighten-3"
-                  :color="edit_fish.color"
+                  :color="info_fish.color"
                 ) fas fa-fish
             v-list-item
               v-list-item-content
                 v-list-item-title id:
-                v-list-item-subtitle {{edit_fish.id}}
+                v-list-item-subtitle {{info_fish.id}}
             v-list-item
               v-list-item-content
                 v-list-item-title Name :
-                v-list-item-subtitle {{edit_fish.name}}
+                v-list-item-subtitle {{info_fish.name}}
               v-list-item-action
-                v-btn(icon @click="openEditDialog('Name',edit_fish.name)")
+                v-btn(icon @click="openEditDialog('Name',info_fish.name)")
                   v-icon( small color="grey lighten-1") fas fa-pen
             v-list-item
               v-list-item-content
                 v-list-item-title Add Day :
-                v-list-item-subtitle {{edit_fish.day}} ~
+                v-list-item-subtitle {{info_fish.day}} ~
               v-list-item-action
-                v-btn(icon @click="openEditDialog('Add Day',edit_fish.day)")
+                v-btn(icon @click="openEditDialog('Add Day',info_fish.day)")
                   v-icon( small color="grey lighten-1") fas fa-pen
             v-list-item(three-line)
               v-list-item-content
                 v-list-item-title Memo :
-                v-list-item-subtitle {{edit_fish.memo}}
+                v-list-item-subtitle {{info_fish.memo}}
               v-list-item-action
-                v-btn(icon @click="openEditDialog('Memo',edit_fish.memo)")
+                v-btn(icon @click="openEditDialog('Memo',info_fish.memo)")
                   v-icon( small color="grey lighten-1") fas fa-pen
         GoldfishInfoEdit(:dialog="dialog",:editValue="edit_value" :editProperty="edit_property" @closeEditDialog="closeEditDialog")
         .add_goldfish_btn
@@ -100,9 +100,9 @@ export default {
           color: 'orange'
         }
       ],
-      edit: false,
+      info: false,
       addnew: false,
-      edit_fish: {
+      info_fish: {
         id: 0,
         img: '',
         name: '',

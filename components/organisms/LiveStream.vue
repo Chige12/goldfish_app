@@ -1,10 +1,10 @@
 <template lang="pug">
-  .live_stream
+  .live_stream(:class="{'live_stream_expand':expand}")
     img(:src="streamUrl" ref="video").video
     .take_picture(:class="{'take_picture--open':take_picture}")
       .take_picture_wrapper
         .canvas_wrapper
-          canvas.canvas(ref="canvas")
+          canvas.canvas(ref="canvas" width="200px" height="200px")
         .save_btn_wrapper
           .my-2
             v-btn( large depressed @click="ClosePicture()").save_btn
@@ -13,7 +13,6 @@
             v-btn( color="#e45e8a" dark large depressed @click="PictureSave()").save_btn
               v-icon(left) fas fa-download
               span SAVE
-            
 </template>
 
 <script>
@@ -22,42 +21,64 @@ export default {
     return {
       stream_path: 'streaming.mjpeg',
       camera_path: 'camera.mjpeg',
+      now_path: 'streaming.mjpeg',
       take_picture: false
     }
   },
   computed: {
     streamUrl() {
-      return `${process.env.SERVER_URL}/${this.stream_path}`
+      return `${process.env.SERVER_URL}/${this.now_path}`
     },
     screenshot() {
       return this.$store.state.screenshot
+    },
+    expand() {
+      return this.$store.state.expand
     }
   },
   watch: {
     screenshot() {
+      this.SizeSync()
       this.take_picture = true
       let video = this.$refs.video
-      let canvas = this.$refs.canvas
-      canvas.width = video.videoWidth
-      canvas.height = video.videoHeight
-      canvas
-        .getContext('2d')
-        .drawImage(video, 0, 0, canvas.width, canvas.height)
-      this.SizeSync()
+      try {
+        this.ctx.drawImage(video, 0, 0)
+      } catch (error) {
+        this.$store.commit(
+          'setAlertError',
+          '正しく画像を取得できませんでした。'
+        )
+        console.error(error)
+      }
+    },
+    expand(val) {
+      this.now_path = val ? this.camera_path : this.stream_path
     }
   },
   mounted() {
+    this.ctx = this.$refs.canvas.getContext('2d')
     this.SizeSync()
+    let video = this.$refs.video
+    video.onerror = () => {
+      this.$store.commit('setAlertError', '映像を読み込めませんでした。')
+    }
   },
   methods: {
     SizeSync() {
-      let video = this.$refs.video
+      let camX = 480
+      let camY = 640
       let canvas = this.$refs.canvas
-      canvas.style.width = `${video.clientWidth}px`
-      canvas.style.height = `${video.clientHeight}px`
+      let sW = window.innerWidth
+      let sH = window.innerHeight
+      let scaleX = (sW - 24) / camX
+      let scaleY = (sH - 120) / camY
+      let scale = scaleX >= scaleY ? scaleY : scaleX
+      canvas.setAttribute('width', `${camX * scale}px`)
+      canvas.setAttribute('height', `${camY * scale}px`)
+      canvas.style.width = `${camX * scale}px`
+      canvas.style.height = `${camY * scale}px`
     },
     PictureSave() {
-      this.SizeSync()
       let canvas = this.$refs.canvas
       this.take_picture = false
 
@@ -68,8 +89,14 @@ export default {
       console.log(year + '年' + month + '月' + day + '日')
 
       let link = document.createElement('a')
-      link.href = canvas.toDataURL('image/png')
-      link.download = 'test.png'
+      try {
+        link.href = canvas.toDataURL('image/png')
+      } catch (error) {
+        this.alert = true
+        this.error = 'エクスポートできませんでした。'
+        console.error(error)
+      }
+      link.download = 'kingyo.png'
       link.click()
     },
     ClosePicture() {
@@ -83,9 +110,13 @@ export default {
 @import '~assets/styles/variables.scss';
 
 .live_stream {
+  transition: 0.3s $ease-out;
   width: 100%;
   height: calc(100% - 120px);
   background: #333;
+  &_expand {
+    height: 100%;
+  }
 }
 .video {
   display: block;
@@ -111,7 +142,7 @@ export default {
   margin: auto;
   width: 100%;
   height: auto;
-  z-index: 200;
+  z-index: 300;
   transition: 0.5s $ease-out;
   background: rgba(#000, 0.8);
   pointer-events: none;
@@ -136,7 +167,13 @@ export default {
 }
 
 .canvas_wrapper {
-  padding-top: 20px;
+  display: block;
+  position: absolute;
+  width: min-content;
+  height: min-content;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .video,

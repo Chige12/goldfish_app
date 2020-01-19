@@ -8,7 +8,18 @@
     .buttons.buttons_right
       v-btn.icon(nuxt to="/list" color="#eee" fab small elevation="0" )
         v-icon(color="#e45e8a") fas fa-fish
+      v-btn.icon(@click="expandStream()" color="#eee" fab small elevation="0" )
+        v-icon(color="#e45e8a") fas fa-expand
 </template>
+<script>
+export default {
+  methods: {
+    expandStream() {
+      this.$store.commit('expandStream', true)
+    }
+  }
+}
+</script>
 <style lang="scss" scoped>
 .buttons {
   position: absolute;

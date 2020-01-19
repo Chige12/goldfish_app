@@ -1,3 +1,12 @@
 $theme-pink: #e45e8a;
 
-$ease-out: cubic-bezier(.13,.77,.46,1);
+$ease-out: cubic-bezier(0.13, 0.77, 0.46, 1);
+
+.alert {
+  position: absolute;
+  top: 8px;
+  left: 0;
+  width: 100%;
+  padding: 16px;
+  z-index: 2000;
+}

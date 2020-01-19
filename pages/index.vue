@@ -17,7 +17,7 @@
           .user_select(v-if="SwitchUserType!==''")
             Main
         .alert
-          v-alert(type="error" v-model="alert" dense dismissible elevation="5") {{error}}
+          v-alert.v-alert(type="error" v-model="alert" dense dismissible elevation="5") {{error}}
 </template>
 
 <script>

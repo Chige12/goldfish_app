@@ -1,7 +1,16 @@
 <template lang="pug">
 div
   .loading(:class="{ 'is-finish': dataLoadFinish }")
-    p loading...
+    .loading_wrapper
+      .progress_circule
+        v-progress-circular(
+          indeterminate
+          color="#fff"
+          :size="70"
+        )
+        img(src="~/assets/icon_t.png").progress_icon
+      .loading_txt LOADING
+    
 </template>
 
 <script>
@@ -36,5 +45,29 @@ export default {
     opacity: 0;
     z-index: -1;
   }
+  &_wrapper {
+    text-align: center;
+  }
+  &_txt {
+    margin-top: 16px;
+    font-size: 24px;
+  }
+}
+
+.progress_circule {
+  position: relative;
+}
+.progress_icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 50px;
+  height: 50px;
+  margin: auto;
+  display: block;
+  background: #fff;
+  border-radius: 50%;
 }
 </style>

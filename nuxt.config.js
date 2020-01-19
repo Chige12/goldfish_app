@@ -50,7 +50,12 @@ export default {
   /*
    ** Nuxt.js modules
    */
-  modules: ['@nuxtjs/dotenv', '@nuxtjs/style-resources', '@nuxtjs/axios'],
+  modules: [
+    '@nuxtjs/dotenv',
+    '@nuxtjs/style-resources',
+    '@nuxtjs/axios',
+    '@nuxtjs/pwa'
+  ],
   styleResources: {
     scss: ['~/assets/styles/variables.scss', '~/assets/styles/mixins.scss']
   },
@@ -75,5 +80,17 @@ export default {
         })
       }
     }
+  },
+  manifest: {
+    name: 'Goldfish-app',
+    short_name: 'きんぎょ',
+    title: 'Goldfish-app',
+    description: 'オンラインで金魚を観察・鑑賞できるアプリ',
+    display: 'standalone',
+    lang: 'ja',
+    theme_color: '#e45e8a',
+    background_color: '#fff',
+    scope: '/',
+    start_url: '/'
   }
 }

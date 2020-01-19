@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@nuxtjs/dotenv": "^1.4.1",
+    "@nuxtjs/pwa": "^3.0.0-beta.19",
     "@nuxtjs/style-resources": "^1.0.0",
     "eslint-loader": "^3.0.2",
     "eslint-plugin-vue": "^6.0.0",

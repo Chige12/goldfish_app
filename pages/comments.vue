@@ -22,6 +22,8 @@
                 h5.mb-1 {{ post.user }}
                 small {{ post.date }}
               p {{ post.comment }}
+        .alert
+          v-alert(type="error" v-model="alert" dense dismissible elevation="5") {{error}}
 </template>
 
 <script>
@@ -41,7 +43,9 @@ export default {
       form: {
         comment: ''
       },
-      posts: null
+      posts: null,
+      alert: false,
+      error: 'エラー'
     }
   },
   computed: {
@@ -60,34 +64,46 @@ export default {
   methods: {
     async load() {
       console.log('load')
-      const snapshot = await db
-        .collection('posts')
-        .orderBy('date', 'desc')
-        .get()
-      console.log('snapshot', snapshot)
-      if (snapshot.empty) {
-        this.posts = []
-      } else {
-        this.posts = snapshot.docs.map((doc) => {
-          return doc.data()
-        })
+      try {
+        const snapshot = await db
+          .collection('posts')
+          .orderBy('date', 'desc')
+          .get()
+        console.log('snapshot', snapshot)
+        if (snapshot.empty) {
+          this.posts = []
+        } else {
+          this.posts = snapshot.docs.map((doc) => {
+            return doc.data()
+          })
+        }
+      } catch (error) {
+        this.error = 'コメントがロードできませんでした。'
+        this.alert = true
+        console.error(error)
       }
     },
     submitPost() {
-      console.log('submitPost')
-      if (this.form.comment === '') {
-        return false
+      try {
+        console.log('submitPost')
+        if (this.form.comment === '') {
+          return false
+        }
+        const date = new Date()
+        db.collection('posts').add({
+          comment: this.form.comment,
+          user: this.user.displayName,
+          date: `${date.getMonth() +
+            1}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`
+        })
+        console.log('posts success')
+        this.load()
+        this.form.comment = ''
+      } catch (error) {
+        this.error = '投稿に失敗しました。'
+        this.alert = true
+        console.error(error)
       }
-      const date = new Date()
-      db.collection('posts').add({
-        comment: this.form.comment,
-        user: this.user.displayName,
-        date: `${date.getMonth() +
-          1}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`
-      })
-      console.log('posts success')
-      this.load()
-      this.form.comment = ''
     }
   }
 }

@@ -43,7 +43,8 @@ export default {
           yaw: this.yaw,
           pitch: this.pitch
         })
-        .catch(function(error) {
+        .catch((error) => {
+          this.$store.commit('setAlertError', 'カメラを動かせません。')
           console.log(error)
         })
       console.log(response)
@@ -56,7 +57,8 @@ export default {
           yaw: this.yaw,
           pitch: this.pitch
         })
-        .catch(function(error) {
+        .catch((error) => {
+          this.$store.commit('setAlertError', 'カメラを動かせません。')
           console.log(error)
         })
       console.log(response)

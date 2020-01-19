@@ -16,6 +16,8 @@
             UserSelect
           .user_select(v-if="SwitchUserType!==''")
             Main
+        .alert
+          v-alert(type="error" v-model="alert" dense dismissible elevation="5") {{error}}
 </template>
 
 <script>
@@ -39,6 +41,17 @@ export default {
     },
     comments() {
       return this.$store.state.comments
+    },
+    alert: {
+      get() {
+        return this.$store.state.alert
+      },
+      set(boolean) {
+        this.$store.commit('setAlert', boolean)
+      }
+    },
+    error() {
+      return this.$store.state.error
     }
   },
   async mounted() {

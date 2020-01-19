@@ -6,7 +6,10 @@ export const state = () => ({
   user_type: '',
   screenshot: false,
   user: null,
-  posts: []
+  posts: [],
+  expand: false,
+  alert: false,
+  error: 'エラー'
 })
 
 export const mutations = {
@@ -24,6 +27,16 @@ export const mutations = {
   },
   setPosts(state, posts) {
     state.posts = posts
+  },
+  expandStream(state, boolean) {
+    state.expand = boolean
+  },
+  setAlertError(state, msg) {
+    state.error = msg
+    state.alert = true
+  },
+  setAlert(state, boolean) {
+    state.alert = boolean
   }
 }
 
